@@ -1,12 +1,128 @@
-
 <!DOCTYPE html>
-<html>
-  <head>
-	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>Question AI</title>
-  </head>
-  <body>	
-	<h1>2019-2025</h1>
-	<p>网站建设中……</p>  
-  </body>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>车牌号查询系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #1a73e8;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plate-input {
+            flex-grow: 1;
+            padding: 0.8rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .plate-input:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.3);
+        }
+
+        .search-btn {
+            padding: 0.8rem 2rem;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #1557b0;
+        }
+
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            min-height: 80px;
+        }
+
+        .result-title {
+            color: #374151;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+        }
+
+        .result-content {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem 2rem;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">车牌号查询系统</h1>
+        <div class="input-group">
+            <input type="text" 
+                   class="plate-input" 
+                   placeholder="请输入车牌号（例如：京A12345）" 
+                   pattern="^[京津沪渝冀晋辽吉黑苏浙皖闽赣鲁豫鄂湘粤琼川贵云藏陕甘青宁新][A-Z][A-Z0-9]{4,5}$"
+                   required>
+            <button class="search-btn">立即查询</button>
+        </div>
+        <div class="result-box">
+            <h3 class="result-title">查询结果</h3>
+            <p class="result-content">
+                请输入有效的车牌号进行查询<br>
+                （支持格式：省级简称+字母+5位以内字母/数字）
+            </p>
+        </div>
+    </div>
+</body>
 </html>
