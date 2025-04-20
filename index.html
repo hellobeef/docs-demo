@@ -3,76 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>车牌号查询系统</title>
+    <title>简约文档站</title>
     <style>
+        /* 全局样式 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-color: #2563eb;  /* 主色调 */
+            --bg-color: #f9fafb;       /* 背景色 */
+            --text-color: #1f2937;     /* 主文本色 */
+            --light-text: #6b7280;     /* 次文本色 */
+            --code-bg: #f3f4f6;        /* 代码块背景 */
+            --border-radius: 12px;
         }
 
         body {
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            color: var(--text-color);
         }
 
+        /* 容器布局 */
         .container {
-            background: white;
-            padding: 2rem 3rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
+            display: flex;
+            min-height: 100vh;
         }
 
-        .title {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #1a73e8;
+        /* 侧边栏 */
+        .sidebar {
+            flex: 0 0 280px;
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .logo {
             font-size: 1.8rem;
             font-weight: 600;
-        }
-
-        .input-group {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .plate-input {
-            flex-grow: 1;
-            padding: 0.8rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 1rem;
-            outline: none;
+        .nav-list {
+            list-style: none;
         }
 
-        .plate-input:focus {
-            border-color: #1a73e8;
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.3);
+        .nav-list a {
+            display: block;
+            color: var(--light-text);
+            text-decoration: none;
+            padding: 0.8rem 0;
+            font-size: 0.95rem;
+            transition: color 0.3s, padding-left 0.3s;
+            position: relative;
         }
 
-        .search-btn {
-            padding: 0.8rem 2rem;
-            background-color: #1a73e8;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .nav-list a.active,
+        .nav-list a:hover {
+            color: var(--primary-color);
+            padding-left: 0.5rem;
         }
 
-        .search-btn:hover {
-            background-color: #1557b0;
+        .nav-list a.active::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: var(--border-radius);
         }
+
+        /* 主内容区 */
+        .main-content {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-description {
+            font-size: 1.1rem;
+            color: var(--light-text);
+        }
+
+        /* 文档内容样式 */
+        .doc-content h1 { font-size: 2rem; margin: 2rem 0 1.5rem; }
+        .doc-content h2 { font-size: 1.6rem; margin: 1.5rem 0 1.2rem; }
+        .doc-content h3 { font-size: 1.3rem; margin: 1.2rem 0 1rem; }
+        .doc-content p { color: var(--light-text); margin: 1rem 0; }
+        .doc-content a { color: var(--primary-color); text-decoration: none; border-bottom: 2px solid transparent; transition: border-color 0.3s; }
+        .doc-content a:hover { border-color: var(--primary-color); }
+
+        /* 代码块 */
+        .doc-content pre {
+            background-color: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .doc-content code {
+            font-size: 0.9rem;
+            color: #2563eb;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                flex: none;
+                width: 100%;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .sidebar.open {
+                max-height: 100vh;
+                padding: 1.5rem;
+            }
+            .main-content {
+                padding: 2rem;
+            }
+        }
+    </style>
+    <!-- 引入字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+        <div class="logo">Docs</div>
+        <ul class="nav-list">
+            <li><a href="#introduction" class="active">简介</a></li>
+            <li><a href="#getting-started">快速开始</a></li>
+            <li><a href="#features">核心功能</a></li>
+            <li><a href="#api-reference">API 参考</a></li>
+        </ul>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <header class="page-header">
+            <h1 class="page-title">开发者文档</h1>
+            <p class="page-description">技术文档与开发指南</p>
+        </header>
+
+        <div class="doc-content">
+            <h1 id="introduction">1. 简介</h1>
+            <p>欢迎来到技术文档中心，这里提供详细的产品使用说明和开发接口文档。本网站采用简约现代设计，旨在为开发者提供清晰、高效的阅读体验。</p>
+
+            <h2 id="getting-started">2. 快速开始</h2>
+            <p>在开始之前，请确保已经安装最新版本的开发工具：</p>
+            <pre>
+                <code>
+npm install -g my-project-cli
+                </code>
+            </pre>
+
+            <h3>2.1 初始化项目</h3>
+            <p>使用以下命令创建新项目：</p>
+            <pre>
+                <code>
+my-project create my-app
+cd my-app
+                </code>
+            </pre>
+
+            <h2 id="features">3. 核心功能</h2>
+            <ul>
+                <li>响应式布局，适配所有设备</li>
+                <li>清晰的层级结构和导航系统</li>
+                <li>语法高亮的代码示例</li>
+                <li>平滑滚动和锚点定位</li>
+            </ul>
+        </div>
+    </main>
+
+    <script>
+        // 移动端侧边栏折叠逻辑
+        const sidebar = document.querySelector('.sidebar');
+        const navLinks = document.querySelectorAll('.nav-list a');
+
+        // 点击导航链接时折叠侧边栏（移动端）
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+
+        // 点击logo展开/折叠侧边栏（移动端）
+        const logo = document.querySelector('.logo');
+        logo.addEventListener('click', () => {
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.toggle('open');
+            }
+        });
+    </script>
+</body>
+</html>
 
         .result-box {
             margin-top: 1.5rem;
